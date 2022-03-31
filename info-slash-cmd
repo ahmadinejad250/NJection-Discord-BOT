@@ -1,0 +1,16 @@
+
+const lib = require('lib')({token: process.env.STDLIB_SECRET_TOKEN});
+
+await lib.discord.channels['@0.2.0'].messages.create({
+  "channel_id": `${context.params.event.channel_id}`,
+  "content": `<@!${context.params.event.member.user.id}>You just used the command /info!`,
+  "tts": false,
+  "embeds": [
+    {
+      "type": "rich",
+      "title": `Informations about Nejad's Bot`,
+      "description": `Bot Name: Nejad's Bot\nDeveloper Name: Mahmud Ahmadi Nejad\nOperating System: Linux\nSee Nejad's Portfolio here:https://www.behance.net/nejadgworld`,
+      "color": 0x00FFFF
+    }
+  ]
+});
