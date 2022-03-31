@@ -1,0 +1,22 @@
+const lib = require('lib')({token: process.env.STDLIB_SECRET_TOKEN});
+let content = null;
+let initiated = false;
+let message = context.params.event.content.toLowerCase();
+if (message.startsWith('wiki what is a ') || message.startsWith('wiki who is a ') || message.startsWith('wiki who was a ') || message.startsWith('wiki what was a ') || message.startsWith('wiki who was an ') || message.startsWith('wiki who is an ') || message.startsWith('wiki what was an ') || message.startsWith('wiki what is an ')) {
+  content = context.params.event.content.split(' ').slice(3).join('_');
+  initiated = true;
+} else {
+  if (message.startsWith('wiki who was ') || message.startsWith('wiki who is ') || message.startsWith('wiki what was ') || message.startsWith('wiki what is ')) {
+    content = context.params.event.content.split(' ').slice(2).join('_');
+    initiated = true;
+  }
+}
+
+let link = 'https://en.wikipedia.org/wiki/' + content;
+
+if (initiated) {
+  await lib.discord.channels['@0.1.0'].messages.create({
+    channel_id: context.params.event.channel_id,
+    content: `${link}`
+  });
+}
