@@ -1,0 +1,22 @@
+// authenticates you with the API standard library
+// type `await lib.` to display API autocomplete
+const lib = require('lib')({token: process.env.STDLIB_SECRET_TOKEN});
+
+// Only respond to messages containing "%help".
+if (context.params.event.content.toLowerCase().includes('%help')) {
+
+  await lib.discord.channels['@0.2.0'].messages.create({
+    channel_id: context.params.event.channel_id,
+    content: `Hey<@!${context.params.event.author.id}>, how can I help you?`,
+        tts: false,
+        embeds: [
+          {
+            type: 'rich',
+            title: `Carefully read the messages below for help!`,
+            description: `Please visit our website for a list of commands.\n Here's the link for our site:https://bit.ly/310s9Ax \nFor further help or suggesions, please contact Ahmadi Nejad\nor visit our server here: https://discord.com/invite/YG29aqVpjz\nTo use chatbot, dm Mahmud Ahmadi Nejad#8175
+            Thanks for your time!`,
+            color: 0x00ffff,
+          },
+        ],
+      });
+    }
